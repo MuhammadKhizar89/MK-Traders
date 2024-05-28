@@ -18,12 +18,12 @@ const Cart = () => {
 
   return (
     <>
-      <div className='bg-gradient-to-b from-[#f8b72c] to-black min-h-screen'>
+      <div className='bg-gradient-to-b p-2 from-[#f8b72c] to-black min-h-screen'>
         <div className='flex flex-col md:p-5'>
-          <div className='bg-white w-full rounded-t-md shadow-md md:p-4'>
+          <div className='bg-[#f8b72c] border-2 border-black w-full rounded-t-md shadow-md md:p-4'>
             <p className='text-3xl font-bold text-center my-4'>Shopping Cart</p>
             {products.map(product => (
-              <div key={product.id} className='flex items-center justify-between p-4 border-b border-gray-200'>
+              <div key={product.id} className='flex items-center justify-between p-1 border-b border-gray-200'>
                 <div className='flex items-center'>
                   <div className='w-28 h-20'>
                     <img src={img3} alt="Product" className='w-full h-full object-cover rounded-md' />
@@ -41,7 +41,7 @@ const Cart = () => {
               </div>
             ))}
           </div>
-          <div className='flex flex-col rounded-b-lg bg-white p-5'>
+          <div className='flex flex-col rounded-b-lg bg-white p-5 border-2 border-black'>
  <div className='flex justify-between'>
 <div className='font-bold text-2xl'>SubTotal</div>
 <div className='font-bold '>90pkr</div>

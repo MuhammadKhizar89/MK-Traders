@@ -3,6 +3,7 @@ import img1 from '../../assets/Land1.jpg'; // Adjust the path accordingly
 import img2 from '../../assets/Land2.jpg'; // Adjust the path accordingly
 import img3 from '../../assets/Land3.jpg'; // Adjust the path accordingly
 import '../../App.css';
+import { Link } from 'react-router-dom';
 const Home = () => {
   const data = [img1, img2, img3];
   const messages = [
@@ -23,7 +24,9 @@ const Home = () => {
       <div className='bg-[#f8b72c]'>
         <div className='flex-col text-center md:flex md:flex-row justify-between p-4'>
           <div className='font-bold text-5xl'>
-            <h1 className="text-xl md:text-3xl font-bold  " ><a href="/">MK Traders</a></h1>
+          <h2 className=" text-2xl tracking-tight font-extrabold text-gray-900 sm:text-3xl md:text-4xl">
+                <Link to='/' >MK Traders</Link>
+              </h2>
           </div>
           <div>
             <input className='p-2 mt-2 md:mt-0 md:w-[80vh] text-black rounded-l-md' type="text" placeholder='Search Any Product' />
