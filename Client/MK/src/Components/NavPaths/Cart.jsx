@@ -25,7 +25,7 @@ const Cart = () => {
             {products.map(product => (
               <div key={product.id} className='flex  items-center justify-between p-1 border-b border-gray-200'>
                 <div className='flex items-center mb-2'>
-                  <div className='w-20 h-20  md:w-28 md:h-20'>
+                  <div className='w-20 h-20  md:w-28 md:h-28'>
                     <img src={img3} alt="Product" className='w-full h-full object-cover rounded-md' />
                   </div>
                   <div className='flex flex-col ml-4'>
@@ -46,10 +46,10 @@ const Cart = () => {
 <div className='font-bold text-2xl'>SubTotal</div>
 <div className='font-bold '>90pkr</div>
  </div>
- <button className='bg-blue-600 rounded-md text-white p-4 my-2' >Buy All</button>
+ <button className='bg-blue-600 hover:bg-blue-800 rounded-md text-white p-4 my-2' >Buy All</button>
 <div className='flex justify-center'>
 or
- <Link to='/' className=' text-center text-blue-600 ml-1'>  Continue Shopping</Link>
+ <Link to='/' className=' text-center hover:underline text-blue-600 ml-1'>  Continue Shopping</Link>
 
 </div>
 
