@@ -18,20 +18,20 @@ const Cart = () => {
 
   return (
     <>
-      <div className='bg-gradient-to-b p-2 from-[#f8b72c] to-black min-h-screen'>
-        <div className='flex flex-col md:p-5'>
+      <div className='bg-gradient-to-b p-2 from-[#f8b72c] to-black '>
+        <div className='flex flex-col  md:p-5'>
           <div className='bg-[#f8b72c] border-2 border-black w-full rounded-t-md shadow-md md:p-4'>
             <p className='text-3xl font-bold text-center my-4'>Shopping Cart</p>
             {products.map(product => (
-              <div key={product.id} className='flex items-center justify-between p-1 border-b border-gray-200'>
-                <div className='flex items-center'>
-                  <div className='w-28 h-20'>
+              <div key={product.id} className='flex  items-center justify-between p-1 border-b border-gray-200'>
+                <div className='flex items-center mb-2'>
+                  <div className='w-20 h-20  md:w-28 md:h-20'>
                     <img src={img3} alt="Product" className='w-full h-full object-cover rounded-md' />
                   </div>
                   <div className='flex flex-col ml-4'>
-                    <p>Name: <div className='font-bold'>{product.name}</div></p>
-                    <p>Quantity: {product.quantity}</p>
-                    <p>Status: {product.status}</p>
+                    <p>Name: <div className='font-bold inline'> {product.name}</div></p>
+                    <p>Quantity: <div className='font-bold inline'>{product.quantity}</div></p>
+                    <p>Status: <div className='font-bold inline'>{product.status}</div></p>
                   </div>
                 </div>
                 <div className='flex flex-col items-end'>

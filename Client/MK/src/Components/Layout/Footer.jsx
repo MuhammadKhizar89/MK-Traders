@@ -8,8 +8,7 @@ const Footer = () => {
 
       {/* Footer */}
       <div className='bg-black font-bold py-5 text-white  text-center'>
-      <i class="fa-regular fa-copyright mr-2" ></i>
-      All rights reserved by MK Traders
+      © 2024 MK-Traders. All rights reserved.
       </div>
     </div>
   );
