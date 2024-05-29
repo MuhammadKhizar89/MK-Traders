@@ -2,20 +2,17 @@ import {React,useState} from 'react'
 import { Link } from 'react-router-dom'
 import img3 from '../../assets/hehe.jpeg'; // Adjust the path accordingly
 import Footer from '../Layout/Footer';
+import ProductReviews from './ProductReviews';
 const ProductDetail = () => {
   const [quantity, setQuantity] = useState(0);
-
   const increment = () => {
     setQuantity(prevQuantity => prevQuantity + 1);
   };
-
   const decrement = () => {
     setQuantity(prevQuantity => (prevQuantity > 0 ? prevQuantity - 1 : 0));
   };
-
   return (
     <>
-
   <div className=' bg-[#f8b72c] w-full h-[120vh] '>
 <button className='bg-green-500  text-white font-semibold p-3 rounded-md m-5'><Link to='/'>Back</Link></button>
     <article class="mx-2 mb-3 bg-white max-w-screen-lg rounded-md border border-gray-100 text-gray-700 shadow-md md:mx-auto">
@@ -53,6 +50,7 @@ const ProductDetail = () => {
   </div>
 </article>
 </div>
+<ProductReviews/>
 <Footer/>
 </>
   )

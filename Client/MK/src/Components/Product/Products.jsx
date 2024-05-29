@@ -32,7 +32,7 @@ const Products = () => {
               See Details
             </Link>
           </div>
-        </div>
+        </div>        
   </div>
       </div>      
     </>
