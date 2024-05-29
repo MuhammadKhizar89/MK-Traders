@@ -24,7 +24,7 @@ const AboutUs = () => {
             </div>
           </main>
         </div>
-        <div className="lg:w-1/2 md:flex md:justify-end md:items-center ">
+        <div className="lg:w-1/2 md:flex md:justify-end md:items-center mx-4 ">
           <img
             className="md:w-[80%] md:h-[85%] mb-2 border-2 border-black"
             src={img3}

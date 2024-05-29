@@ -41,12 +41,12 @@ const Cart = () => {
               </div>
             ))}
           </div>
-          <div className='flex flex-col rounded-b-lg bg-white p-5 border-2 border-black'>
+          <div className='flex flex-col rounded-b-lg bg-[#f8b72c] p-5 border-2 border-black'>
  <div className='flex justify-between'>
 <div className='font-bold text-2xl'>SubTotal</div>
 <div className='font-bold '>90pkr</div>
  </div>
- <button className='bg-blue-600 rounded-md text-white p-4 my-2' >Confirm All</button>
+ <button className='bg-blue-600 rounded-md text-white p-4 my-2' >Buy All</button>
 <div className='flex justify-center'>
 or
  <Link to='/' className=' text-center text-blue-600 ml-1'>  Continue Shopping</Link>

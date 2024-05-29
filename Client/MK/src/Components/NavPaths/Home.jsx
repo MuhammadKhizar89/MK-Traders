@@ -24,13 +24,11 @@ const Home = () => {
       <div className='bg-[#f8b72c]'>
         <div className='flex-col text-center md:flex md:flex-row justify-between p-4'>
           <div className='font-bold text-5xl'>
-          <h2 className=" text-2xl tracking-tight font-extrabold text-gray-900 sm:text-3xl md:text-4xl">
-                <Link to='/' >MK Traders</Link>
-              </h2>
+          <h1 class=" text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">MK<span class="text-blue-600 dark:text-blue-500"> Traders</span></h1>
           </div>
-          <div>
+          <div className='md:mt-3'>
             <input className='p-2 mt-2 md:mt-0 md:w-[80vh] text-black rounded-l-md' type="text" placeholder='Search Any Product' />
-            <button className='bg-green-500 font-medium rounded-r-md p-2 hover:bg-green-700'>Search</button>
+            <button className='bg-blue-600 text-white dark:bg-blue-500 hover:bg-blue-950 font-medium rounded-r-md p-2 '>Search</button>
           </div>
         </div>
       </div>
