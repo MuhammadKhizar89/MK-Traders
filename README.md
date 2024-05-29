@@ -21,4 +21,3 @@ To run this project
 
 Thank you for using MK-Traders! We hope you have a great experience shopping with us.
 
-© 2024 MK-Traders. All rights reserved.
