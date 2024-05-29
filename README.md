@@ -15,10 +15,7 @@ MK-Traders is designed to provide a seamless shopping experience for businesses 
 - **Customer Support**: Access our dedicated support team for assistance with orders, returns, and inquiries.
 
 ## Getting Started
-
-### Prerequisites
-
-To run this project locally, you need to have the following installed:
+To run this project
 
 [Here is the Vercel link](#)
 
