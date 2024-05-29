@@ -1,8 +1,9 @@
-import {React,useState} from 'react'
+import {React,useState,useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import img3 from '../../assets/hehe.jpeg'; // Adjust the path accordingly
 import Footer from '../Layout/Footer';
 import ProductReviews from './ProductReviews';
+import UserFeedback from './UserFeedback';
 const ProductDetail = () => {
   const [quantity, setQuantity] = useState(0);
   const increment = () => {
@@ -11,10 +12,14 @@ const ProductDetail = () => {
   const decrement = () => {
     setQuantity(prevQuantity => (prevQuantity > 0 ? prevQuantity - 1 : 0));
   };
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []); // Empty dependency array ensures this runs only on mount
+  
   return (
     <>
-  <div className=' bg-[#f8b72c] w-full h-[120vh] '>
-<button className='bg-green-500  text-white font-semibold p-3 rounded-md m-5'><Link to='/'>Back</Link></button>
+  <div className=' bg-[#f8b72c] w-full h-[90vh] md:h-[120vh] '>
+<button className=' bg-green-500  text-white font-semibold p-3 rounded-md m-5'><Link to='/'>Back</Link></button>
     <article class="mx-2 mb-3 bg-white max-w-screen-lg rounded-md border border-gray-100 text-gray-700 shadow-md md:mx-auto">
   <div class="flex flex-col md:flex-row">
     <div class="p-5 md:w-4/6 md:p-8">
@@ -51,6 +56,7 @@ const ProductDetail = () => {
 </article>
 </div>
 <ProductReviews/>
+<UserFeedback/>
 <Footer/>
 </>
   )
