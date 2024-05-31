@@ -18,9 +18,9 @@ const ProductDetail = () => {
   
   return (
     <>
-  <div className=' bg-[#f8b72c] w-full h-[90vh] md:h-[120vh] '>
+  <div className=' bg-[#f8b72c] w-full md:h-[150vh] lg:h-[120vh] p-1  '>
 <button className=' bg-green-500  text-white font-semibold p-3 rounded-md m-5'><Link to='/'>Back</Link></button>
-    <article class="mx-2 mb-3 bg-white max-w-screen-lg rounded-md border border-gray-100 text-gray-700 shadow-md md:mx-auto">
+    <article class="mx-2 mb-3 bg-white max-w-screen-lg rounded-md border border-gray-100 text-gray-700 shadow-md md:mx-auto ">
   <div class="flex flex-col md:flex-row">
     <div class="p-5 md:w-4/6 md:p-8">
       <span class="rounded-md bg-red-500 px-2 py-1 text-xs uppercase text-white">Sale</span>
@@ -55,7 +55,7 @@ const ProductDetail = () => {
   </div>
 </article>
 </div>
-<ProductReviews/>
+<ProductReviews />
 <UserFeedback/>
 <Footer/>
 </>

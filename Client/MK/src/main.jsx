@@ -8,6 +8,8 @@ import Cart from './Components/NavPaths/Cart.jsx'
 import Products from './Components/Product/Products.jsx'
 import AboutUs from './Components/NavPaths/AboutUs.jsx'
 import OrderDetails from './Components/NavPaths/OrderDetails.jsx'
+import SignUp from './Components/Accountomponents/SignUp.jsx'
+import Login from './Components/Accountomponents/Login.jsx'
 const router=createBrowserRouter([
   {
   path:'/',
@@ -37,6 +39,15 @@ const router=createBrowserRouter([
  {
   path:'/ProductDetail',
   element:<ProductDetail/>
+ },
+ {
+  path:'/SignUp',
+  element:<SignUp/>
+ }
+ ,
+ {
+  path:'/Login',
+  element:<Login/>
  }
 ])
 ReactDOM.createRoot(document.getElementById('root')).render(
