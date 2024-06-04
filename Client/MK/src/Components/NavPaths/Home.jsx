@@ -5,6 +5,8 @@ import img3 from '../../assets/Land3.jpg';
 import '../../App.css';
 import { Link } from 'react-router-dom';
 import Login from '../Accountomponents/Login';
+import { useCookies } from 'react-cookie';
+import { useApi } from '../../Components/Context/ApiProvider';
 const Home = () => {
   const data = [img1, img2, img3];
   const messages = [
@@ -14,21 +16,24 @@ const Home = () => {
   ];
   const [currentIndex, setCurrentIndex] = useState(0);
   const [dropdownStatus, setDropdownStatus] = useState(false);
-  const [loginState,SetloginState]=useState(false);
+  const [loginState, setLoginState] = useState(false);
   const dropdownRef = useRef(null);
   const toggleButtonRef = useRef(null);
+  const { logout } = useApi();
+  const [cookies, setCookie, removeCookie] = useCookies(['token', 'email', 'username']);
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
     }, 3000);
     return () => clearInterval(interval); // Clear interval on component unmount
   }, [data.length]);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
-        dropdownRef.current && 
+        dropdownRef.current &&
         !dropdownRef.current.contains(event.target) &&
-        toggleButtonRef.current && 
+        toggleButtonRef.current &&
         !toggleButtonRef.current.contains(event.target)
       ) {
         setDropdownStatus(false);
@@ -40,9 +45,14 @@ const Home = () => {
     };
   }, []);
 
-useEffect(() => {
-  document.body.style.overflow = '';
-}, []);
+  useEffect(() => {
+    document.body.style.overflow = '';
+  }, []);
+
+  const handleLogout = () => {
+    logout();
+    setDropdownStatus(false);
+  };
 
   return (
     <>
@@ -62,20 +72,31 @@ useEffect(() => {
               className='bg-white absolute top-0 right-0 mr-4 md:mr-0 mt-3 md:mt-0 md:relative hover:bg-gray-600 ml-2 w-10 h-10 flex justify-center items-center rounded-full'
               onClick={() => setDropdownStatus(!dropdownStatus)}
             >
-              <i className='fa-solid fa-user'></i>
+           {cookies.token ?   <i className='fa-solid fa-user'></i>: <i className='fa-solid fa-right-to-bracket'></i>}
             </div>
+            
             {dropdownStatus && (
               <div ref={dropdownRef} id='dropdownInformationButton' className="z-10 absolute top-15 right-2 md:top-14 bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
-                <div className="px-4 py-3 text-sm text-black bg-text-white">
-                  <div>Bonnie Green</div>
-                  <div className="font-medium truncate">name@flowbite.com</div>
-                </div>
-                <div className="py-2">
-                  <Link to="/SignUp" className="block px-4 py-2 text-sm hover:bg-gray-200" onClick={() => { console.log('Sign Up') }}>Create An Account</Link>
-                </div>
-                <div className="py-2">
-                  <Link  className="block px-4 py-2 text-sm hover:bg-gray-200" onClick={() => { SetloginState(true); document.body.style.overflow = 'hidden'; setDropdownStatus(false);  }}>Login</Link>
-                </div>
+                {cookies.email && cookies.username ? (
+                  <>
+                    <div className="px-4 py-3 text-sm text-black bg-text-white">
+                      <div>Hello {cookies.username}</div>
+                      <div className="font-medium truncate">{cookies.email}</div>
+                    </div>
+                    <div className="py-2">
+                      <Link to="/" className="block px-4 py-2 text-sm hover:bg-gray-200" onClick={handleLogout}>Logout</Link>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="py-2">
+                      <Link to="/SignUp" className="block px-4 py-2 text-sm hover:bg-gray-200" >Create An Account</Link>
+                    </div>
+                    <div className="py-2">
+                      <Link className="block px-4 py-2 text-sm hover:bg-gray-200" onClick={() => { setLoginState(true); document.body.style.overflow = 'hidden'; setDropdownStatus(false); }}>Login</Link>
+                    </div>
+                  </>
+                )}
               </div>
             )}
           </div>
@@ -88,9 +109,9 @@ useEffect(() => {
           </div>
         </div>
       </div>
-     {loginState&&
-      <Login SetloginState={SetloginState}/>
-     }
+      {loginState &&
+        <Login setLoginState={setLoginState} />
+      }
     </>
   );
 };
