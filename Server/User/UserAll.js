@@ -6,6 +6,7 @@ const UserModel = require('../AllSchemas/UserModel');
 const OrderModel = require('../AllSchemas/OrderModel');
 const ProductModel = require('../AllSchemas/ProductModel');
 const CartModel = require('../AllSchemas/CartModel');
+const ReviewModel = require('../AllSchemas/ReviewModel');
 const authMiddleware = async (req, res, next) => {
     const token = req.header('auth-token');
     if (!token) {
@@ -33,12 +34,11 @@ router.post('/register', async (req, res) => {
         if (existingPhoneUser) {
             return res.status(400).json({ message: 'User with this phone number already exists' });
         }
-        // Hash the password before saving the user
         const hashedPassword = await bcrypt.hash(Password, 10);
         const newUser = new UserModel({ Username, PhoneNumber, Email, Address, Password: hashedPassword });
         await newUser.save();
-        const token = jwt.sign({ userId: newUser._id }, 'mktraders_jazib'); // Set token expiration time
-        res.status(201).json({ message: 'User registered successfully', token });
+        const token = jwt.sign({ userId: newUser._id }, 'mktraders_jazib');
+        res.status(201).json({ message: 'User registered successfully', token,Email,UserName });
     } catch (error) {
         res.status(500).json({ message: 'Error registering user', error });
     }
@@ -57,16 +57,14 @@ router.post('/login', async (req, res) => {
         if (!user) {
             return res.status(400).json({ message: 'User not found' });
         }
-
-        // Compare the provided password with the hashed password in the database
-        const isMatch = await bcrypt.compare(Password, user.Password);
+       const isMatch = await bcrypt.compare(Password, user.Password);
 
         if (!isMatch) {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
         // Generate JWT token
         const token = jwt.sign({ userId: user._id }, 'mktraders_jazib');
-        res.status(200).json({ message: 'Login successful', token });
+        res.status(200).json({ message: 'Login successful', token, Email, Username: user.Username });
     } catch (error) {
         res.status(500).json({ message: 'Error logging in', error });
     }
@@ -225,6 +223,72 @@ router.post('/removefromCart', authMiddleware, async (req, res) => {
     }
 });
 
+router.get('/getallproducts', async (req, res) => {
+    try {
+        const products = await ProductModel.find({});
+        res.status(200).json({ products });
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching products', error });
+    }
+});
+
+router.post('/givereview', authMiddleware, async (req, res) => {
+    const { productId, rating, description } = req.body;
+    if (!productId || !rating || !description) {
+        return res.status(400).json({ message: 'All fields are required' });
+    }
+    try {
+        const userId = req.user.userId;
+        // Check if the product exists
+        const product = await ProductModel.findById(productId);
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+
+        // Check if the user has already reviewed the product
+        // const existingReview = await ReviewModel.findOne({ productId, userId });
+        // if (existingReview) {
+        //     return res.status(400).json({ message: 'You have already reviewed this product' });
+        // }
+let Rating=rating;
+let Description=description;
+
+// Create a new review
+        const newReview = new ReviewModel({
+            productId,
+            userId,
+            Rating,
+            Description,
+        });
+
+        await newReview.save();
+        res.status(201).json({ message: 'Review submitted successfully', review: newReview });
+    } catch (error) {
+        res.status(500).json({ message: 'Error submitting review', error });
+    }
+});
+router.get('/getproductreview/:product_id', async (req, res) => {
+    const productId = req.params.product_id;
+    try {
+        const productReviews = await ReviewModel.find({ productId }).populate('userId', 'Username');
+        res.status(200).json({ reviews: productReviews });
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching product reviews', error });
+    }
+});
+router.get('/getspecificproduct/:product_id', async (req, res) => {
+    const productId = req.params.product_id;
+    try {
+        const product = await ProductModel.findById(productId);
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+        res.status(200).json({ product });
+    } catch (error) {
+        console.error("Error fetching specific product:", error);
+        res.status(500).json({ message: 'Error fetching specific product', error });
+    }
+});
 
 
 module.exports = router;

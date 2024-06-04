@@ -1,110 +1,157 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useApi } from '../Context/ApiProvider';
+import { useCookies } from 'react-cookie';
+
 const SignUp = () => {
+  const { signup } = useApi(); // Use the signup function from the ApiProvider
+  const [cookies, setCookie] = useCookies(['token', 'email']);
+  const [username, setUsername] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [address, setAddress] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handleSignUp = async (event) => {
+    event.preventDefault();
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+    try {
+      const response = await signup({
+        Username: username,
+        PhoneNumber: phoneNumber,
+        Email: email,
+        Address: address,
+        Password: password
+      });
+      if (response.message === 'User registered successfully') {
+        setCookie('token', response.token, { path: '/' });
+        setCookie('email', email, { path: '/' });
+        navigate('/'); // Navigate to the desired page after signup
+      } else {
+        console.error('Signup failed:', response.message);
+      }
+    } catch (error) {
+      console.error('Error signing up:', error);
+    }
+  };
+
   return (
     <>
-    <div className='md:bg-[#f8b72c] px-5 pb-5' >
-    <button className=' bg-green-500  text-white font-semibold p-3 rounded-md m-5'><Link to='/'>Back</Link></button>
-    <body class="flex  md:bg-[#f8b72c]  items-center justify-center">
-  <div class="flex justify-center items-center">
-    <div class="grid">
-      <div id="back-div" class="rounded-[26px]">
-        <div class="border-[20px] border-transparent rounded-[20px] bg-white shadow-lg xl:p-10 2xl:p-10 lg:p-10 md:p-10 sm:p-2">
-          <h1 class="py-2 font-bold text-2xl text-center cursor-default">Sign Up</h1>
-          <form action="#" method="post" class="space-y-4 p-5">
-            <div>
-              <label for="full-name" class="mb-2 text-lg">Full Name</label>
-              <input
-                id="full-name"
-                class="border p-3 dark:border-gray-700 shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
-                type="text"
-                placeholder="Full Name"
-                required
-              />
+      <div className='md:bg-[#f8b72c] px-5 pb-5'>
+        <button className='bg-green-500 text-white font-semibold p-3 rounded-md m-5'>
+          <Link to='/'>Back</Link>
+        </button>
+        <div className="flex items-center justify-center md:bg-[#f8b72c]">
+          <div className="flex justify-center items-center">
+            <div className="grid">
+              <div id="back-div" className="rounded-[26px]">
+                <div className="border-[20px] border-transparent rounded-[20px] bg-white shadow-lg xl:p-10 2xl:p-10 lg:p-10 md:p-10 sm:p-2">
+                  <h1 className="py-2 font-bold text-2xl text-center cursor-default">Sign Up</h1>
+                  <form onSubmit={handleSignUp} className="space-y-4 p-5">
+                    <div>
+                      <label htmlFor="full-name" className="mb-2 text-lg">Full Name</label>
+                      <input
+                        id="full-name"
+                        className="border p-3 dark:border-gray-700 shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
+                        type="text"
+                        placeholder="Full Name"
+                        required
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="email" className="mb-2 text-lg">Email</label>
+                      <input
+                        id="email"
+                        className="border p-3 dark:border-gray-700 shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
+                        type="email"
+                        placeholder="Email"
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="address" className="mb-2 text-lg">Address</label>
+                      <input
+                        id="address"
+                        className="border p-3 dark:border-gray-700 shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
+                        type="text"
+                        placeholder="Home / Shop Address"
+                        required
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="contact-no" className="mb-2 text-lg">Contact Number</label>
+                      <input
+                        id="contact-no"
+                        className="border p-3 dark:border-gray-700 shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
+                        type="tel"
+                        placeholder="Contact Number"
+                        required
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="password" className="mb-2 text-lg">Password</label>
+                      <input
+                        id="password"
+                        className="border p-3 shadow-md dark:border-gray-700 placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
+                        type="password"
+                        placeholder="Password"
+                        required
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="confirm-password" className="mb-2 text-lg">Confirm Password</label>
+                      <input
+                        id="confirm-password"
+                        className="border p-3 shadow-md dark:border-gray-700 placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
+                        type="password"
+                        placeholder="Confirm Password"
+                        required
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                      />
+                    </div>
+                    <button
+                      className="bg-[#f8b72c] shadow-lg mt-6 hover:border-2 hover:border-black p-2 text-white rounded-lg w-full hover:scale-105 hover:from-purple-500 hover:to-blue-500 transition duration-300 ease-in-out"
+                      type="submit"
+                    >
+                      SIGN UP
+                    </button>
+                  </form>
+                  <div className="flex flex-col mt-4 items-center justify-center text-sm">
+                    <h3>
+                      Already have an account?
+                      <span
+                        className="group text-blue-400 transition-all duration-100 ease-in-out underline"
+                      >
+                        <Link to='/Login'>
+                          Log In
+                        </Link>
+                      </span>
+                    </h3>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div>
-              <label for="email" class="mb-2 text-lg">Email</label>
-              <input
-                id="email"
-                class="border p-3 dark:border-gray-700 shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
-                type="email"
-                placeholder="Email"
-                required
-              />
-            </div>
-            <div>
-              <label for="address" class="mb-2 text-lg">Address</label>
-              <input
-                id="address"
-                class="border p-3 dark:border-gray-700 shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
-                type="text"
-                placeholder="Home / Shop Address"
-                required
-              />
-            </div>
-            <div>
-              <label for="contact-no" class="mb-2 text-lg">Contact Number</label>
-              <input
-                id="contact-no"
-                class="border p-3 dark:border-gray-700 shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
-                type="tel"
-                placeholder="Contact Number"
-                required
-              />
-            </div>
-            <div>
-              <label for="password" class="mb-2 text-lg">Password</label>
-              <input
-                id="password"
-                class="border p-3 shadow-md dark:border-gray-700 placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
-                type="password"
-                placeholder="Password"
-                required
-              />
-            </div>
-            <div>
-              <label for="confirm-password" class="mb-2 text-lg">Confirm Password</label>
-              <input
-                id="confirm-password"
-                class="border p-3 shadow-md dark:border-gray-700 placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
-                type="password"
-                placeholder="Confirm Password"
-                required
-              />
-            </div>
-            <button
-              class="bg-[#f8b72c] shadow-lg mt-6 hover:border-2 hover:border-black p-2 text-white rounded-lg w-full hover:scale-105 hover:from-purple-500 hover:to-blue-500 transition duration-300 ease-in-out"
-              type="submit"
-            >
-              SIGN UP
-            </button>
-          </form>
-          <div class="flex flex-col mt-4 items-center justify-center text-sm">
-            <h3 class="">
-              Already have an account?
-              <a
-                class="group text-blue-400 transition-all duration-100 ease-in-out"
-                href="#"
-              >
-                <span
-                  class="bg-left-bottom underline bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out"
-                >
-                    <Link to='/Login'>
-                    Log In
-                    </Link>
-                </span>
-              </a>
-            </h3>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</body>
-
-</div>
     </>
-  )
+  );
 }
 
-export default SignUp
+export default SignUp;

@@ -10,48 +10,50 @@ import AboutUs from './Components/NavPaths/AboutUs.jsx'
 import OrderDetails from './Components/NavPaths/OrderDetails.jsx'
 import SignUp from './Components/Accountomponents/SignUp.jsx'
 import Login from './Components/Accountomponents/Login.jsx'
-const router=createBrowserRouter([
+import ApiProvider from './/Components/Context/ApiProvider.jsx'; // Import the ApiProvider
+
+const router = createBrowserRouter([
   {
-  path:'/',
-  element:<App/>,
-  children:[
-    {
-      path:'/cart',
-      element:<Cart/>
-     },
-     {
-      path:'/',
-      element:<Products/>,
-      children:[{
-        
-      }]
-     } ,
-     {
-      path:'/orderDetails',
-      element:<OrderDetails/>
-     },
-     {
-      path:'/aboutus',
-      element:<AboutUs/>
-     } 
+    path: '/',
+    element: <App />,
+    children: [
+      {
+        path: '/cart',
+        element: <Cart />
+      },
+      {
+        path: '/',
+        element: <Products />,
+        children: []
+      },
+      {
+        path: '/orderDetails',
+        element: <OrderDetails />
+      },
+      {
+        path: '/aboutus',
+        element: <AboutUs />
+      }
     ]
- },
- {
-  path:'/ProductDetail',
-  element:<ProductDetail/>
- },
- {
-  path:'/SignUp',
-  element:<SignUp/>
- }
- ,
- {
-  path:'/Login',
-  element:<Login/>
- }
+  },
+  {
+    path: '/product/:productid',
+    element: <ProductDetail />
+  },
+  {
+    path: '/SignUp',
+    element: <SignUp />
+  },
+  {
+    path: '/Login',
+    element: <Login />
+  }
 ])
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>,
+    <ApiProvider> {/* Wrap the RouterProvider with ApiProvider */}
+      <RouterProvider router={router} />
+    </ApiProvider>
+  </React.StrictMode>
 )
