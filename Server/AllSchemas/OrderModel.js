@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const moment = require('moment-timezone');
 
 const OrderSchema = new Schema({
     productId: {
@@ -26,11 +27,10 @@ const OrderSchema = new Schema({
     },
     review: {
         type: String
-    }
-    ,
+    },
     date: {
-        type: Date,
-        default: Date.now
+        type: String, // Change the type to String
+        default: () => moment().tz('Asia/Karachi').format() // Format the date as a string
     }
 });
 
