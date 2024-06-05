@@ -3,13 +3,16 @@ import { Link, useParams } from 'react-router-dom';
 import { useApi } from '../../Components/Context/ApiProvider'; // Import the useApi hook
 import '../../App.css';
 const UserFeedback = () => {
-  const { fetchReviews, reviews } = useApi(); 
+  const { fetchReviews} = useApi(); 
   const [loading, setLoading] = useState(true); // Initially, set loading to true
+  const [reviews, setReviews] = useState([]);
+
   const { productid } = useParams();
   useEffect(() => {
     const getProductReviews = async () => {
       try {
-        await fetchReviews(productid); // Call the fetchReviews function with the productId
+        const data=await fetchReviews(productid); // Call the fetchReviews function with the productId
+        setReviews(data);
       } catch (error) {
         console.error('Error fetching product reviews:', error);
       } finally {

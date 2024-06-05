@@ -4,17 +4,31 @@ import Footer from '../Layout/Footer';
 import ProductReviews from './ProductReviews';
 import UserFeedback from './UserFeedback';
 import { useApi } from '../../Components/Context/ApiProvider';
+import { useCookies } from 'react-cookie';
+import '../../App.css';
 
 const ProductDetail = () => {
   const { productid } = useParams();
-  const { getSpecificProduct } = useApi();
-  const [quantity, setQuantity] = useState(0);
+  const { getSpecificProduct, buyNow, addToCart } = useApi(); // Access addToCart from the context
+  const [quantity, setQuantity] = useState(1);
   const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [cookies, setCookie, removeCookie] = useCookies(['token', 'email', 'username']);
+
   const increment = () => {
     setQuantity(prevQuantity => prevQuantity + 1);
   };
+  
   const decrement = () => {
-    setQuantity(prevQuantity => (prevQuantity > 0 ? prevQuantity - 1 : 0));
+    setQuantity(prevQuantity => (prevQuantity > 1 ? prevQuantity - 1 : 1));
+  };
+
+  const handleBuyNow = () => {
+    buyNow(productid, quantity, product.Price, cookies); 
+  };
+
+  const handleAddToCart = () => {
+    addToCart(productid, quantity); // Assuming userId is available in the component
   };
 
   useEffect(() => {
@@ -25,6 +39,9 @@ const ProductDetail = () => {
       } catch (error) {
         console.error('Error fetching specific product:', error);
       }
+      finally{
+        setLoading(false);
+      }
     };
     fetchProduct();
   }, [getSpecificProduct, productid]);
@@ -34,6 +51,11 @@ const ProductDetail = () => {
       <div className=' bg-[#f8b72c] w-full md:h-[150vh] lg:h-[120vh] p-1'>
         <button className=' bg-green-500  text-white font-semibold p-3 rounded-md m-5'><Link to='/'>Back</Link></button>
         <article className="mx-2 mb-3 bg-white max-w-screen-lg rounded-md border border-gray-100 text-gray-700 shadow-md md:mx-auto ">
+        {loading && (
+        <div className='flex justify-center mt-4'>
+          <div className='loader'></div>
+        </div>
+      )}
           {product && (
             <div className="flex flex-col md:flex-row">
               <div className="p-5 md:w-4/6 md:p-8">
@@ -59,8 +81,8 @@ const ProductDetail = () => {
                   </div>
                 </div>
                 <div className='flex md:mt-72 ' >
-                  <button className="mt-4 mr-2 w-40 h-16 flex items-center justify-center rounded-md bg-sky-400 px-8 py-2 text-center text-white duration-150 md:mb-4 hover:translate-y-1 hover:bg-sky-500">Buy Now</button>
-                  <button className="mt-4 mr-2 w-40 h-16 flex items-center justify-center rounded-md bg-sky-400 px-8 py-2 text-center text-white duration-150 md:mb-4 hover:translate-y-1 hover:bg-sky-500">Add to Cart</button>
+                  <button className="mt-4 mr-2 w-40 h-16 flex items-center justify-center rounded-md bg-sky-400 px-8 py-2 text-center text-white duration-150 md:mb-4 hover:translate-y-1 hover:bg-sky-500" onClick={handleBuyNow} >Buy Now</button>
+                  <button className="mt-4 mr-2 w-40 h-16 flex items-center justify-center rounded-md bg-sky-400 px-8 py-2 text-center text-white duration-150 md:mb-4 hover:translate-y-1 hover:bg-sky-500" onClick={handleAddToCart}>Add to Cart</button>
                 </div>
               </div>
               <div className="mx-auto mb-8 md:mb-1 items-center px-5 md:flex md:p-8">
@@ -70,7 +92,7 @@ const ProductDetail = () => {
           )}
         </article>
       </div>
-      <ProductReviews />
+      {product && <ProductReviews rating={product.Rating}/>}
       <UserFeedback />
       <Footer />
     </>

@@ -69,25 +69,24 @@ router.post('/login', async (req, res) => {
         res.status(500).json({ message: 'Error logging in', error });
     }
 });
-router.post('/buynow', async (req, res) => {
-    const { productId, userId, quantity, price } = req.body;
-    if (!productId || !userId || !quantity || !price) {
+router.post('/buynow', authMiddleware, async (req, res) => {
+    const userId = req.user.userId;
+    const { productId, quantity, price } = req.body;
+    if (!productId || !quantity || !price) {
         return res.status(400).json({ message: 'All fields are required' });
     }
     try {
-        // Check if the product exists
         const product = await ProductModel.findById(productId);
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
-
         // Check if the user exists
         const user = await UserModel.findById(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-        let status="Pending";
-        let review="";
+        let status = "Pending";
+        let review = "";
         // Create a new order
         const newOrder = new OrderModel({
             productId,
@@ -104,27 +103,21 @@ router.post('/buynow', async (req, res) => {
         res.status(500).json({ message: 'Error placing order', error });
     }
 });
-router.post('/addToCart', async (req, res) => {
-    const { productId, userId, quantity } = req.body;
-
-    if (!productId || !userId || !quantity) {
+router.post('/addToCart', authMiddleware, async (req, res) => {
+    const userId = req.user.userId;    
+    const { productId, quantity } = req.body;
+    if (!productId || !quantity) {
         return res.status(400).json({ message: 'All fields are required' });
     }
-
     try {
-        // Check if the product exists
         const product = await ProductModel.findById(productId);
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
-
-        // Check if the user exists
         const user = await UserModel.findById(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-
-        // Check if the cart item already exists for the same product and user
         let cartItem = await CartModel.findOne({ productId, userId });
         
         if (cartItem) {
@@ -152,7 +145,6 @@ router.get('/getallCart', authMiddleware, async (req, res) => {
         res.status(500).json({ message: 'Error fetching cart items', error });
     }
 });
-
 
 router.post('/buyallfromcart', authMiddleware, async (req, res) => {
     const { cartItems } = req.body;
