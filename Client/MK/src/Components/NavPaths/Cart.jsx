@@ -6,7 +6,7 @@ import { useCookies } from 'react-cookie';
 
 const Cart = () => {
   
-  const { getAllCartItems, removeFromCart } = useApi();
+  const { buyAllFromCart,getAllCartItems, removeFromCart } = useApi();
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();

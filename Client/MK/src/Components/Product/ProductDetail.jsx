@@ -6,9 +6,8 @@ import UserFeedback from './UserFeedback';
 import { useApi } from '../../Components/Context/ApiProvider';
 import { useCookies } from 'react-cookie';
 import {  useNavigate } from 'react-router-dom';
-
+import Alert from '../Layout/Alert';
 import '../../App.css';
-
 const ProductDetail = () => {
   const navigate = useNavigate();
 
@@ -18,7 +17,8 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [cookies, setCookie, removeCookie] = useCookies(['token', 'email', 'username']);
-
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
   const increment = () => {
     setQuantity(prevQuantity => prevQuantity + 1);
   };
@@ -28,17 +28,23 @@ const ProductDetail = () => {
   };
 
   const handleBuyNow = () => {
-    if(!cookies.token){
+    if (!cookies.token) {
       navigate('/login');
+    } else {
+      setShowAlert(true);
+      setAlertMessage('Item bought successfully!');
+      buyNow(productid, quantity, product.Price, cookies); 
     }
-    buyNow(productid, quantity, product.Price, cookies); 
   };
-
+  
   const handleAddToCart = () => {
-    if(!cookies.token){
+    if (!cookies.token) {
       navigate('/login');
+    } else {
+      setShowAlert(true);
+      setAlertMessage('Item added to cart successfully!');
+      addToCart(productid, quantity); // Assuming userId is available in the component
     }
-    addToCart(productid, quantity); // Assuming userId is available in the component
   };
 
   useEffect(() => {
@@ -58,6 +64,7 @@ const ProductDetail = () => {
 
   return (
     <>
+      {showAlert && <Alert message={alertMessage} />}
       <div className=' bg-[#f8b72c] w-full md:h-[150vh] lg:h-[120vh] p-1'>
         <button className=' bg-green-500  text-white font-semibold p-3 rounded-md m-5'><Link to='/'>Back</Link></button>
         <article className="mx-2 mb-3 bg-white max-w-screen-lg rounded-md border border-gray-100 text-gray-700 shadow-md md:mx-auto ">
