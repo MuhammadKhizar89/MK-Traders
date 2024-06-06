@@ -89,7 +89,7 @@ const OrderDetails = () => {
                 <div className='loader'></div>
               </div>
             )}
-            {
+            {!loading&&
             filteredOrders.length === 0 ? (
           <div className='text-center bg-white text-black p-4 rounded-lg mt-4'>{noOrdersMessage}</div>
         ): null

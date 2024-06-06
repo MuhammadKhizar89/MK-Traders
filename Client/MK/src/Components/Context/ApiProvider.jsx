@@ -1,12 +1,8 @@
 import React, { createContext, useContext, useState } from "react";
 import { useCookies } from 'react-cookie';
-
 const ApiContext = createContext();
-
 export const useApi = () => useContext(ApiContext);
-
-const host = "http://localhost:3000";
-
+const host = import.meta.env.VITE_SERVER_URL||"https://mk-traders-backend.vercel.app";
 const ApiProvider = ({ children }) => {
   const [cookies, setCookie, removeCookie] = useCookies(['token']);
   const [products, setProducts] = useState([]);
