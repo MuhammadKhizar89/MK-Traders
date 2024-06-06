@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useApi } from '../../Components/Context/ApiProvider';
 import '../../App.css';
+import { Link, useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 const Cart = () => {
+  
   const { getAllCartItems, removeFromCart } = useApi();
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const [cookies, setCookie, removeCookie] = useCookies(['token', 'email', 'username']);
+
   const handleBuyAll = async () => {
     try {
       const orders = await buyAllFromCart(cartItems);
@@ -30,6 +35,9 @@ const Cart = () => {
   };
 
   useEffect(() => {
+    if(!cookies.token){
+      navigate('/login');
+    }
     const fetchCartItems = async () => {
       try {
         const items = await getAllCartItems();

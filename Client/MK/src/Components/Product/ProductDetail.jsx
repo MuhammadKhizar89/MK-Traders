@@ -5,9 +5,13 @@ import ProductReviews from './ProductReviews';
 import UserFeedback from './UserFeedback';
 import { useApi } from '../../Components/Context/ApiProvider';
 import { useCookies } from 'react-cookie';
+import {  useNavigate } from 'react-router-dom';
+
 import '../../App.css';
 
 const ProductDetail = () => {
+  const navigate = useNavigate();
+
   const { productid } = useParams();
   const { getSpecificProduct, buyNow, addToCart } = useApi(); // Access addToCart from the context
   const [quantity, setQuantity] = useState(1);
@@ -24,10 +28,16 @@ const ProductDetail = () => {
   };
 
   const handleBuyNow = () => {
+    if(!cookies.token){
+      navigate('/login');
+    }
     buyNow(productid, quantity, product.Price, cookies); 
   };
 
   const handleAddToCart = () => {
+    if(!cookies.token){
+      navigate('/login');
+    }
     addToCart(productid, quantity); // Assuming userId is available in the component
   };
 

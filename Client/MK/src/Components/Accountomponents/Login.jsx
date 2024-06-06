@@ -40,7 +40,7 @@ const Login = ({ setLoginState }) => {
                 setLoginState(false);
               }
               document.body.style.overflow = '';
-              if (location.pathname === '/Login') {
+              if (location.pathname === '/login') {
                 navigate('/');
               }
             }}
