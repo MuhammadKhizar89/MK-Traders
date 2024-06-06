@@ -258,11 +258,9 @@ const ApiProvider = ({ children }) => {
 
       if (response.ok) {
         const data = await response.json();
-        alert("Review submitted successfully");
         return data;
       } else {
         const errorData = await response.json();
-        alert(`Error: ${errorData.message}`);
       }
     } catch (error) {
       alert("An error occurred while submitting your review. Please try again later.");

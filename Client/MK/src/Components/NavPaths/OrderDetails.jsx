@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { useApi } from '../../Components/Context/ApiProvider'; // Adjust the import path accordingly
+import { useApi } from '../../Components/Context/ApiProvider';
 import '../../App.css';
+import Alert from '../Layout/Alert'; // Import the Alert component
 
 const OrderDetails = () => {
   const [selectedOption, setSelectedOption] = useState("pending");
   const [feedback, setFeedback] = useState("");
   const [rating, setRating] = useState(5);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+  const [submitting, setSubmitting] = useState(false);
+  const [cancelling, setCancelling] = useState(false);
   const [cookies] = useCookies(['token', 'email', 'username']);
-  const { fetchOrders, orders, handleRatingSubmit, cancelOrder } = useApi(); // Use fetchOrders, orders, handleRatingSubmit, and cancelOrder from context
+  const { fetchOrders, orders, handleRatingSubmit, cancelOrder } = useApi();
+  const navigate = useNavigate();
+  const [cancelAlert, setCancelAlert] = useState(false);
+  const [submitAlert, setSubmitAlert] = useState(false);
 
   useEffect(() => {
     if (!cookies.token) {
@@ -19,7 +24,7 @@ const OrderDetails = () => {
     } else {
       const FetchOrders = async () => {
         await fetchOrders();
-        setLoading(false); // Set loading to false after fetching orders
+        setLoading(false);
       }
       FetchOrders();
     }
@@ -28,19 +33,28 @@ const OrderDetails = () => {
   const sortedOrders = [...orders].sort((a, b) => new Date(b.date) - new Date(a.date));
   const filteredOrders = sortedOrders.filter(order => order.status === selectedOption);
   const noOrdersMessage = `No orders in ${selectedOption}`;
-  const handleSubmitRating = (orderId, productId) => {
-    handleRatingSubmit(orderId, productId, rating, feedback);
+
+  const handleSubmitRating = async (orderId, productId) => {
+    setSubmitting(true);
+    await handleRatingSubmit(orderId, productId, rating, feedback);
     setFeedback("");
     setRating(5);
+    setSubmitting(false);
+    setSubmitAlert(true); // Show submit alert after successful submission
   };
 
   const handleCancelOrder = async (orderId) => {
+    setCancelling(true);
     await cancelOrder(orderId);
-    fetchOrders(); // Refresh the orders after cancellation
+    setCancelling(false);
+    fetchOrders();
+    setCancelAlert(true); // Show cancel alert after successful cancellation
   };
 
   return (
     <div className='bg-gradient-to-b p-2 from-[#f8b72c] to-black'>
+       {cancelAlert && <Alert message="Order cancelled successfully!" />}
+      {submitAlert && <Alert message="Rating submitted successfully!" />}
       <p className='text-3xl font-bold text-center mb-4'>Order Details</p>
       <div className="flex justify-center">
         <div className="flex flex-wrap justify-center">
@@ -156,6 +170,11 @@ const OrderDetails = () => {
           </div>
         ))}
       </div>
+      {(submitting || cancelling) && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="loader"></div>
+        </div>
+      )}
     </div>
   );
 }
