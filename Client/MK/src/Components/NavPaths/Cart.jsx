@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Alert from '../Layout/Alert'; // Import the Alert component
 import { useApi } from '../../Components/Context/ApiProvider';
 import '../../App.css';
 import { Link, useNavigate } from 'react-router-dom';
@@ -6,36 +7,52 @@ import { useCookies } from 'react-cookie';
 
 const Cart = () => {
   
-  const { buyAllFromCart,getAllCartItems, removeFromCart } = useApi();
+  const { buyAllFromCart, getAllCartItems, removeFromCart } = useApi();
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies(['token', 'email', 'username']);
+  const [cookies] = useCookies(['token', 'email', 'username']);
+  const [removeItemLoading, setRemoveItemLoading] = useState(false);
+  const [buyAllLoading, setBuyAllLoading] = useState(false);
+  const [showAlert, setShowAlert] = useState(false); // Manage visibility of the Alert component
+  const [alertMessage, setAlertMessage] = useState(''); // Set the message to display in the Alert component
 
   const handleBuyAll = async () => {
     try {
+      setBuyAllLoading(true);
       const orders = await buyAllFromCart(cartItems);
       console.log('All cart items purchased:', orders);
       setCartItems([]);
-      // Optionally, you can clear the cartItems state or perform any other actions
+      setAlertMessage('All items bought successfully!');
+      setShowAlert(true);
     } catch (error) {
       console.error('Error buying all items from cart:', error);
+      setAlertMessage('Failed to buy all items');
+      setShowAlert(true);
+    } finally {
+      setBuyAllLoading(false);
     }
   };
 
   const handleRemoveItem = async (itemId) => {
     try {
+      setRemoveItemLoading(true);
       await removeFromCart(itemId);
-      // Update cart items after removing the item
       const updatedCartItems = cartItems.filter(item => item._id !== itemId);
       setCartItems(updatedCartItems);
+      setAlertMessage('Item removed successfully!');
+      setShowAlert(true);
     } catch (error) {
       console.error('Error removing item from cart:', error);
+      setAlertMessage('Failed to remove item');
+      setShowAlert(true);
+    } finally {
+      setRemoveItemLoading(false);
     }
   };
 
   useEffect(() => {
-    if(!cookies.token){
+    if (!cookies.token) {
       navigate('/login');
     }
     const fetchCartItems = async () => {
@@ -50,9 +67,9 @@ const Cart = () => {
     };
     fetchCartItems();
   }, [getAllCartItems]);
-
   return (
     <>
+     {showAlert && <Alert message={alertMessage} />} {/* Render the Alert component */}
       <div className='bg-gradient-to-b p-2 from-[#f8b72c] to-black '>
         <div className='flex flex-col md:p-5'>
           <div className={`bg-gray-300 border-2 border-black w-full ${!(cartItems.length === 0) ? 'rounded-t-md' : 'rounded-md'} shadow-md md:p-4`}>
@@ -106,6 +123,11 @@ const Cart = () => {
           </div>}
         </div>
       </div>
+      {(removeItemLoading ||buyAllLoading) && (
+  <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="loader"></div>
+  </div>
+)}
     </>
   );
 }

@@ -2,30 +2,40 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { useApi } from '../Context/ApiProvider';
-import { useCookies } from 'react-cookie';
-
+import "../../App.css";
 const Login = ({ setLoginState }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { login } = useApi();
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (event) => {
     event.preventDefault();
+    // Basic form validation
+    if (!Email || !Password) {
+      setErrorMessage('Please fill in all fields');
+      return;
+    }
     try {
+      setLoading(true);
       const response = await login({ Email, Password });
+      setLoading(false);
       if (response.message === 'Login successful') {
         if (setLoginState) {
           setLoginState(false);
         }
         document.body.style.overflow = '';
-        navigate('/'); // Navigate to the desired page after login
+        navigate('/');
       } else {
-        console.error('Login failed:', response.message);
+        setErrorMessage('Invalid email or password');
       }
     } catch (error) {
       console.error('Error logging in:', error);
+      setLoading(false);
+      setErrorMessage('An error occurred. Please try again.');
     }
   };
 
@@ -82,6 +92,7 @@ const Login = ({ setLoginState }) => {
                         onChange={(e) => setPassword(e.target.value)}
                       />
                     </div>
+                    {errorMessage && <p className="text-red-500">{errorMessage}</p>}
                     <button
                       className="bg-[#f8b72c] shadow-lg mt-6 hover:border-2 hover:border-black p-2 text-white rounded-lg w-full hover:scale-105 hover:from-purple-500 hover:to-blue-500 transition duration-300 ease-in-out"
                       type="submit"
@@ -107,6 +118,11 @@ const Login = ({ setLoginState }) => {
           </div>
         </div>
       </div>
+      {loading && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="loader"></div>
+        </div>
+      )}
     </>
   );
 };

@@ -5,20 +5,23 @@ import ProductReviews from './ProductReviews';
 import UserFeedback from './UserFeedback';
 import { useApi } from '../../Components/Context/ApiProvider';
 import { useCookies } from 'react-cookie';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Alert from '../Layout/Alert';
 import '../../App.css';
+
 const ProductDetail = () => {
   const navigate = useNavigate();
-
   const { productid } = useParams();
-  const { getSpecificProduct, buyNow, addToCart } = useApi(); // Access addToCart from the context
+  const { getSpecificProduct, buyNow, addToCart } = useApi();
   const [quantity, setQuantity] = useState(1);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [cookies, setCookie, removeCookie] = useCookies(['token', 'email', 'username']);
+  const [cookies] = useCookies(['token', 'email', 'username']);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
+  const [buyNowLoading, setBuyNowLoading] = useState(false);
+  const [addToCartLoading, setAddToCartLoading] = useState(false);
+  
   const increment = () => {
     setQuantity(prevQuantity => prevQuantity + 1);
   };
@@ -26,27 +29,44 @@ const ProductDetail = () => {
   const decrement = () => {
     setQuantity(prevQuantity => (prevQuantity > 1 ? prevQuantity - 1 : 1));
   };
-
-  const handleBuyNow = () => {
+  const handleBuyNow = async () => {
     if (!cookies.token) {
       navigate('/login');
     } else {
-      setShowAlert(true);
-      setAlertMessage('Item bought successfully!');
-      buyNow(productid, quantity, product.Price, cookies); 
+      try {
+        setBuyNowLoading(true); // Set buy now loading to true when starting buyNow action
+        await buyNow(productid, quantity, product.Price, cookies); 
+        setShowAlert(true);
+        setAlertMessage('Item bought successfully!');
+      } catch (error) {
+        console.error('Error buying item:', error);
+        setShowAlert(true);
+        setAlertMessage('Failed to buy item');
+      } finally {
+        setBuyNowLoading(false); // Set buy now loading back to false after buyNow action is done
+      }
     }
   };
   
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (!cookies.token) {
       navigate('/login');
     } else {
-      setShowAlert(true);
-      setAlertMessage('Item added to cart successfully!');
-      addToCart(productid, quantity); // Assuming userId is available in the component
+      try {
+        setAddToCartLoading(true); // Set add to cart loading to true when starting addToCart action
+        await addToCart(productid, quantity);
+        setShowAlert(true);
+        setAlertMessage('Item added to cart successfully!');
+      } catch (error) {
+        console.error('Error adding item to cart:', error);
+        setShowAlert(true);
+        setAlertMessage('Failed to add item to cart');
+      } finally {
+        setAddToCartLoading(false); // Set add to cart loading back to false after addToCart action is done
+      }
     }
   };
-
+  
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -54,13 +74,23 @@ const ProductDetail = () => {
         setProduct(data.product);
       } catch (error) {
         console.error('Error fetching specific product:', error);
-      }
-      finally{
+      } finally {
         setLoading(false);
       }
     };
     fetchProduct();
   }, [getSpecificProduct, productid]);
+
+  // Reset showAlert after a delay
+  useEffect(() => {
+    if (showAlert) {
+      const timer = setTimeout(() => {
+        setShowAlert(false);
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [showAlert]);
 
   return (
     <>
@@ -68,11 +98,11 @@ const ProductDetail = () => {
       <div className=' bg-[#f8b72c] w-full md:h-[150vh] lg:h-[120vh] p-1'>
         <button className=' bg-green-500  text-white font-semibold p-3 rounded-md m-5'><Link to='/'>Back</Link></button>
         <article className="mx-2 mb-3 bg-white max-w-screen-lg rounded-md border border-gray-100 text-gray-700 shadow-md md:mx-auto ">
-        {loading && (
-        <div className='flex justify-center mt-4'>
-          <div className='loader'></div>
-        </div>
-      )}
+          {loading && (
+            <div className='flex justify-center mt-4'>
+              <div className='loader'></div>
+            </div>
+          )}
           {product && (
             <div className="flex flex-col md:flex-row">
               <div className="p-5 md:w-4/6 md:p-8">
@@ -112,8 +142,14 @@ const ProductDetail = () => {
       {product && <ProductReviews rating={product.Rating}/>}
       <UserFeedback />
       <Footer />
+      {(buyNowLoading||addToCartLoading) && (
+  <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="loader"></div>
+  </div>
+)}
+
     </>
-  )
+  );
 }
 
 export default ProductDetail;
