@@ -12,7 +12,7 @@ import '../../App.css';
 const ProductDetail = () => {
   const navigate = useNavigate();
   const { productid } = useParams();
-  const { getSpecificProduct, buyNow, addToCart } = useApi();
+  const { getSpecificProduct, buyNow, addToCart,fetchUserInfo } = useApi();
   const [quantity, setQuantity] = useState(1);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -21,7 +21,7 @@ const ProductDetail = () => {
   const [alertMessage, setAlertMessage] = useState('');
   const [buyNowLoading, setBuyNowLoading] = useState(false);
   const [addToCartLoading, setAddToCartLoading] = useState(false);
-  
+  const [userinfo, setUserinfo] = useState(null);
   const increment = () => {
     setQuantity(prevQuantity => prevQuantity + 1);
   };
@@ -35,19 +35,33 @@ const ProductDetail = () => {
     } else {
       try {
         setBuyNowLoading(true); // Set buy now loading to true when starting buyNow action
-        await buyNow(productid, quantity, product.Price, cookies); 
-        setShowAlert(true);
-        setAlertMessage('Item bought successfully!');
+        const d = await fetchUserInfo();
+        setUserinfo(d);
       } catch (error) {
         console.error('Error buying item:', error);
         setShowAlert(true);
         setAlertMessage('Failed to buy item');
       } finally {
-        setBuyNowLoading(false); // Set buy now loading back to false after buyNow action is done
       }
     }
   };
-  
+  const handleconfirm=async()=>{
+try{
+    setAddToCartLoading(true); // Set add to cart loading to true when starting addToCart action
+    await buyNow(productid, quantity, product.Price, cookies); 
+    setShowAlert(true);
+    setAlertMessage('Item bought successfully!');
+  }
+ catch (error) {
+  console.error('Error buying item:', error);
+  setShowAlert(true);
+  setAlertMessage('Failed to buy item');
+} finally {
+  setBuyNowLoading(false); // Set buy now loading back to false after buyNow action is done
+  setAddToCartLoading(false); // Set buy now loading back to false after buyNow action is done
+}
+
+  }  
   const handleAddToCart = async () => {
     if (!cookies.token) {
       navigate('/login');
@@ -142,12 +156,29 @@ const ProductDetail = () => {
       {product && <ProductReviews rating={product.Rating}/>}
       <UserFeedback />
       <Footer />
-      {(buyNowLoading||addToCartLoading) && (
+      {(addToCartLoading) && (
   <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
     <div className="loader"></div>
   </div>
 )}
-
+{(buyNowLoading) && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-30">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md mx-auto">
+            <h2 className="text-xl font-bold mb-4">Checkout</h2>
+            <p className="mb-2">Product Name: <span className="font-semibold">{product?.Name}</span></p>
+            <p className="mb-2">Product Price: <span className="font-semibold">${product?.Price}</span></p>
+            <p className="mb-2">Quantity: <span className="font-semibold">{quantity}</span></p>
+            <p className="mb-4">Total Bill: <span className="font-semibold">${product?.Price * quantity}</span></p>
+            <h3 className="text-lg font-bold mb-2">User Information</h3>
+            <p className="mb-2">Username: <span className="font-semibold">{userinfo?.Username}</span></p>
+            <p className="mb-2">Phone Number: <span className="font-semibold">{userinfo?.PhoneNumber}</span></p>
+            <p className="mb-2">Email: <span className="font-semibold">{userinfo?.Email}</span></p>
+            <p className="mb-4">Address: <span className="font-semibold">{userinfo?.Address}</span></p>
+            <button onClick={()=>{setBuyNowLoading(false)}} className="bg-red-500 mr-2 text-white px-4 py-2 rounded hover:bg-red-700" >Cancel</button>
+            <button onClick={handleconfirm} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Confirm Buy</button>
+          </div>
+        </div>
+      )}
     </>
   );
 }
