@@ -350,5 +350,17 @@ router.put('/cancelorder/:orderid', authMiddleware, async (req, res) => {
         res.status(500).json({ message: 'Error cancelling order', error });
     }
 });
-
-module.exports = router;
+router.get('/getuserinfo', authMiddleware, async (req, res) => {
+    const userId = req.user.userId;
+    try {
+      const user = await UserModel.findById(userId, 'Username Email PhoneNumber Address');
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      res.status(200).json({ user });
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching user info', error });
+    }
+  });
+  
+    module.exports = router;

@@ -2,7 +2,8 @@ import React, { createContext, useContext, useState } from "react";
 import { useCookies } from 'react-cookie';
 const ApiContext = createContext();
 export const useApi = () => useContext(ApiContext);
-const host = import.meta.env.VITE_SERVER_URL||"https://mk-traders-backend.vercel.app";
+// const host = import.meta.env.VITE_SERVER_URL||"https://mk-traders-backend.vercel.app";
+const host = "http://localhost:3000"
 const ApiProvider = ({ children }) => {
   const [cookies, setCookie, removeCookie] = useCookies(['token']);
   const [products, setProducts] = useState([]);
@@ -286,7 +287,28 @@ const ApiProvider = ({ children }) => {
       console.error("Error cancelling order:", error);
     }
   };
-
+  const fetchUserInfo = async () => {
+    try {
+      const response = await fetch(`${host}/userauthentication/getuserinfo`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": cookies.token,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+      console.log(data.user);
+      return data.user;
+      } else {
+        const errorData = await response.json();
+        console.error("Error fetching User Info:", errorData.message);
+      }
+    } catch (error) {
+      console.error("Error fetching User Info:", error);
+    }
+  };
+  
   return (
     <ApiContext.Provider
       value={{
@@ -305,7 +327,8 @@ const ApiProvider = ({ children }) => {
         fetchOrders,
         orders,
         handleRatingSubmit,
-        cancelOrder, // Add cancelOrder to the provider's value
+        cancelOrder, 
+        fetchUserInfo,
       }}
     >
       {children}
