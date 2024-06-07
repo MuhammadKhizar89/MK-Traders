@@ -166,7 +166,7 @@ router.post('/buyallfromcart', authMiddleware, async (req, res) => {
             }
 
             const price = product.Price * quantity;
-            const status = 'Pending';
+            const status = 'pending';
             let review="";
             const newOrder = new OrderModel({
                 productId,
@@ -362,5 +362,5 @@ router.get('/getuserinfo', authMiddleware, async (req, res) => {
       res.status(500).json({ message: 'Error fetching user info', error });
     }
   });
-  
+
     module.exports = router;

@@ -39,7 +39,7 @@ const Cart = () => {
     try {
     setAddToCartLoading(true); // Set add to cart loading to true when starting addToCart action
 
-      const orders = await buyAllFromCart(cartItems);
+      await buyAllFromCart(cartItems);
       setCartItems([]);
       setShowAlert(true);
       setAlertMessage('All items bought successfully!');
@@ -57,6 +57,7 @@ const Cart = () => {
 
   const handleRemoveItem = async (itemId) => {
     try {
+   
       setRemoveItemLoading(true);
       await removeFromCart(itemId);
       const updatedCartItems = cartItems.filter(item => item._id !== itemId);
@@ -144,14 +145,17 @@ const Cart = () => {
           )}
         </div>
       </div>
-      {(addToCartLoading) && (
+      {(removeItemLoading||addToCartLoading) && (
   <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
     <div className="loader"></div>
   </div>
 )}
-      {(removeItemLoading || (buyAllLoading && cartItems.length > 0 && userinfo)) && (
+      {((buyAllLoading && cartItems.length > 0 && userinfo)) && (
         <CheckoutModal
-          products={cartItems.map(item => item.productId)} // Send array of products
+        products={cartItems.map(item => ({
+          ...item.productId,
+          quantity: item.quantity // Add quantity information to each product
+        }))}
           userinfo={userinfo}
           total={cartItems.reduce((acc, curr) => acc + curr.productId.Price * curr.quantity, 0)} // Total price
           onCancel={() => setBuyAllLoading(false)}
