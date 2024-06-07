@@ -31,10 +31,10 @@ const SignUp = () => {
         Address: address,
         Password: password
       });
-      if (response.message === 'User registered successfully') {
-        setCookie('token', data.token);
-        setCookie('email', data.Email );
-        setCookie('username', data.Username);
+      if (response.message === 'Registered successful') {
+        setCookie('token', response.token);
+        setCookie('email', response.Email );
+        setCookie('username', response.Username);
         navigate('/'); 
       } else {
         setErrors({ email: response.message });

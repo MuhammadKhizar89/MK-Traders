@@ -41,7 +41,7 @@ router.post('/register', async (req, res) => {
     const newUser = new UserModel({ Username, PhoneNumber, Email, Address, Password: hashedPassword });
     await newUser.save();
     const token = jwt.sign({ userId: newUser._id }, 'mktraders_jazib');
-    res.status(201).json({ message: 'User registered successfully', token, Email, UserName: Username });
+    res.status(200).json({ message: 'Registered successful', token, Email, Username });
   } catch (error) {
     res.status(500).json({ message: 'Error registering user', error });
   }
