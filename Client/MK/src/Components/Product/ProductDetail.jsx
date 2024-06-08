@@ -147,7 +147,7 @@ try{
                 </div>
               </div>
               <div className="mx-auto mb-8 md:mb-1 items-center px-5 md:flex md:p-8">
-                <img className="rounded-md shadow-lg" src="/hehe.jpeg" alt="Shop image" />
+                <img className="rounded-md shadow-lg" src={product.Image} alt="Shop image" />
               </div>
             </div>
           )}
