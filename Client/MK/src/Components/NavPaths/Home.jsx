@@ -2,12 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import img1 from '../../assets/Land1.jpg';
 import img2 from '../../assets/Land2.jpg';
 import img3 from '../../assets/Land3.jpg';
+import { useNavigate } from 'react-router-dom';
 import '../../App.css';
 import { Link } from 'react-router-dom';
 import Login from '../Accountomponents/Login';
 import { useCookies } from 'react-cookie';
 import { useApi } from '../../Components/Context/ApiProvider';
 const Home = () => {
+  const navigate = useNavigate();
   const data = [img1, img2, img3];
   const messages = [
     'This is the website of suppliers of janitorial items.',
@@ -47,6 +49,8 @@ const Home = () => {
 
   useEffect(() => {
     document.body.style.overflow = '';
+    if(cookies.email=='mktraders@mk.com')
+      navigate('/admin');
   }, []);
 
   const handleLogout = () => {

@@ -29,7 +29,11 @@ const Login = ({ setLoginState }) => {
         }
         document.body.style.overflow = '';
         navigate('/');
-      } else {
+      }
+      else if(response.message === 'Admin Login successful'){
+        navigate('/admin');
+      }
+      else {
         setErrorMessage('Invalid email or password');
       }
     } catch (error) {

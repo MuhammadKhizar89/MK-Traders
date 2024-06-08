@@ -2,9 +2,9 @@ import React, { createContext, useContext, useState } from "react";
 import { useCookies } from 'react-cookie';
 const ApiContext = createContext();
 export const useApi = () => useContext(ApiContext);
-const host = import.meta.env.VITE_SERVER_URL;
+const host = import.meta.env.VITE_SERVER_URL||"http://localhost:3000";
 
-// const host = "http://localhost:3000"
+// const host = ""
 const ApiProvider = ({ children }) => {
   const [cookies, setCookie, removeCookie] = useCookies(['token']);
   const [products, setProducts] = useState([]);
