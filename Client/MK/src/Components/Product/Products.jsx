@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useApi } from '../../Components/Context/ApiProvider';
 import '../../App.css';
-import img  from '../../assets/Land1.jpg';
+import img  from '../../assets/Land2.jpg';
 const Products = () => {
   const { fetchProducts, products } = useApi();
   const [loading, setLoading] = useState(true);
