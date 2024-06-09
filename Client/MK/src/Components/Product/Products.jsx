@@ -82,7 +82,7 @@ const Products = () => {
                 </Link>
                 <div className="mt-2 mb-5 flex items-center justify-between">
                   <p>
-                    <span className="text-3xl font-bold text-slate-900">${product.Price}</span>
+                    <span className="text-3xl font-bold text-slate-900">Rs{product.Price}</span>
                   </p>
                   <div className="flex items-center">
                     {renderStars(product.Rating)}

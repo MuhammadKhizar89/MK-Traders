@@ -8,11 +8,11 @@ const CheckoutModal = ({ products, userinfo, total, onCancel, onConfirm }) => {
         {products.map((product, index) => (
           <div key={index}>
             <p className="mb-2">Product Name: <span className="font-semibold">{product.Name}</span></p>
-            <p className="mb-2">Product Price: <span className="font-semibold">{product.Price*product.quantity}pkr</span></p>
+            <p className="mb-2">Product Price: <span className="font-semibold">Rs {product.Price*product.quantity}</span></p>
             {/* Add more details about each product as needed */}
           </div>
         ))}
-        <p className="mb-4 underline font-bold ">Total Bill: <span className="font-bold text-xl">{total}pkr</span></p>
+        <p className="mb-4 underline font-bold ">Total Bill: <span className="font-bold text-xl">Rs{total}</span></p>
         <h3 className="text-lg font-bold mb-2">User Information</h3>
         <p className="mb-2">Username: <span className="font-semibold">{userinfo?.Username}</span></p>
         <p className="mb-2">Phone Number: <span className="font-semibold">{userinfo?.PhoneNumber}</span></p>
