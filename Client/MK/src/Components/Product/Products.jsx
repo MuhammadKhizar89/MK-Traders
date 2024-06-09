@@ -2,13 +2,34 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useApi } from '../../Components/Context/ApiProvider';
 import '../../App.css';
-import img1 from '../../assets/Land1.jpg';
-import img2 from '../../assets/Land2.jpg';
-import img3 from '../../assets/Land3.jpg';
+import img1 from '../../assets/MKpics/phenyl.png';
+import img2 from '../../assets/MKpics/acid.jpg';
+import img3 from '../../assets/MKpics/hardbroom.jpg';
+import img4 from '../../assets/MKpics/softbroom.jpg';
+import img5 from '../../assets/MKpics/Towel.jpg';
+import img6 from '../../assets/MKpics/Surf Bonus.jpg';
+import img7 from '../../assets/MKpics/TrashBag.jpg';
+import img8 from '../../assets/MKpics/DustCarrier.jpg';
+import img9 from '../../assets/MKpics/washroobrush.jpg';
+import img10 from '../../assets/MKpics/LongDustCarrier.jpg';
+import img11 from '../../assets/MKpics/Wipers.jpg';
+import img12 from '../../assets/MKpics/airFreshners.jpg';
+import img13 from '../../assets/MKpics/Insect Killer(Cobra large)500ml.jpg';
+import img14 from '../../assets/MKpics/MosquitoKiller(Spray)500ml.jpg';
+import img15 from '../../assets/MKpics/handwashliquid.jpg';
+import img16 from '../../assets/MKpics/ScotchBrite.jpg';
+import img17 from '../../assets/MKpics/handtowels.jpg';
+import img18 from '../../assets/MKpics/GlassCleaner.jpg';
+import img19 from '../../assets/MKpics/dusters.jpg';
+import img20 from '../../assets/MKpics/Harpic.jpg';
+import img21 from '../../assets/MKpics/MosquitoKiller(Spray)500ml.jpg';
+
+
 
 const Products = () => {
   const { fetchProducts, products } = useApi();
   const [loading, setLoading] = useState(true);
+  const images = [img1, img2, img3,img4,img5,img6,img7,img8,img9,img10,img11,img12,img13,img14,img15,img16,img17,img18,img19,img20,img21];
 
   useEffect(() => {
     const getProducts = async () => {
@@ -60,7 +81,6 @@ const Products = () => {
     return stars;
   };
 
-  const images = [img1, img2, img3];
 
   return (
     <>
@@ -74,7 +94,7 @@ const Products = () => {
           {products.map((product, index) => (
             <div key={product._id} className="relative m-5 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
               <Link to={`/product/${product._id}`} className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl">
-                <img className="object-cover" src={images[index % images.length]} alt={product.Name} />
+                <img className="object-cover" src={images[product.Image]} alt={product.Name} />
               </Link>
               <div className="mt-4 px-5 pb-5">
                 <Link to={`/product/${product._id}`}>
