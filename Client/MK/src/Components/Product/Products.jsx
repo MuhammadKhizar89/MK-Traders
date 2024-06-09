@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useApi } from '../../Components/Context/ApiProvider';
 import '../../App.css';
-import img  from '../../assets/Land2.jpg';
+import img1 from '../../assets/Land1.jpg';
+import img2 from '../../assets/Land2.jpg';
+import img3 from '../../assets/Land3.jpg';
+
 const Products = () => {
   const { fetchProducts, products } = useApi();
   const [loading, setLoading] = useState(true);
@@ -13,7 +16,7 @@ const Products = () => {
         await fetchProducts();
       } catch (error) {
         console.error("Error fetching products:", error);
-      }finally{
+      } finally {
         setLoading(false);
       }
     };
@@ -57,43 +60,43 @@ const Products = () => {
     return stars;
   };
 
+  const images = [img1, img2, img3];
+
   return (
     <>
-    {loading && (
-      <div className=' flex justify-center mt-4'>
-        <div className='loader'></div>
-      </div>
-    )}
-    <div className='bg-gradient-to-b from-[#f8b72c] to-black'>
-  
-      <div className='flex flex-col md:flex-row md:flex-wrap md:mx-32'>
-      
-        {products.map((product) => (
-          <div key={product._id} className="relative m-5 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
-            <Link to={`/product/${product._id}`} className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl">
-              <img className="object-cover" src={img} alt={product.Name} />
-            </Link>
-            <div className="mt-4 px-5 pb-5">
-              <Link to={`/product/${product._id}`}>
-                <h5 className="text-xl tracking-tight text-slate-900">{product.Name}</h5>
+      {loading && (
+        <div className='flex justify-center mt-4'>
+          <div className='loader'></div>
+        </div>
+      )}
+      <div className='bg-gradient-to-b from-[#f8b72c] to-black'>
+        <div className='flex flex-col md:flex-row md:flex-wrap md:mx-32'>
+          {products.map((product, index) => (
+            <div key={product._id} className="relative m-5 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
+              <Link to={`/product/${product._id}`} className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl">
+                <img className="object-cover" src={images[index % images.length]} alt={product.Name} />
               </Link>
-              <div className="mt-2 mb-5 flex items-center justify-between">
-                <p>
-                  <span className="text-3xl font-bold text-slate-900">${product.Price}</span>
-                </p>
-                <div className="flex items-center">
-                  {renderStars(product.Rating)}
-                  <span className="mr-2 ml-3 rounded bg-yellow-200 px-2.5 py-0.5 text-xs font-semibold">{product.Rating}</span>
+              <div className="mt-4 px-5 pb-5">
+                <Link to={`/product/${product._id}`}>
+                  <h5 className="text-xl tracking-tight text-slate-900">{product.Name}</h5>
+                </Link>
+                <div className="mt-2 mb-5 flex items-center justify-between">
+                  <p>
+                    <span className="text-3xl font-bold text-slate-900">${product.Price}</span>
+                  </p>
+                  <div className="flex items-center">
+                    {renderStars(product.Rating)}
+                    <span className="mr-2 ml-3 rounded bg-yellow-200 px-2.5 py-0.5 text-xs font-semibold">{product.Rating}</span>
+                  </div>
                 </div>
+                <Link to={`/product/${product._id}`} className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
+                  See Details
+                </Link>
               </div>
-              <Link to={`/product/${product._id}`} className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
-                See Details
-              </Link>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
     </>
   );
 };
