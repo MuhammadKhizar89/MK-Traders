@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useApi } from '../../Components/Context/ApiProvider';
+import '../../App.css';
 
 const Products = () => {
   const { fetchProducts, products } = useApi();
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const getProducts = async () => {
       try {
         await fetchProducts();
       } catch (error) {
         console.error("Error fetching products:", error);
+      }finally{
+        setLoading(false);
       }
     };
     getProducts();
@@ -53,8 +58,16 @@ const Products = () => {
   };
 
   return (
+    <>
+    {loading && (
+      <div className=' flex justify-center mt-4'>
+        <div className='loader'></div>
+      </div>
+    )}
     <div className='bg-gradient-to-b from-[#f8b72c] to-black'>
+  
       <div className='flex flex-col md:flex-row md:flex-wrap md:mx-32'>
+      
         {products.map((product) => (
           <div key={product._id} className="relative m-5 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
             <Link to={`/product/${product._id}`} className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl">
@@ -81,6 +94,7 @@ const Products = () => {
         ))}
       </div>
     </div>
+    </>
   );
 };
 
