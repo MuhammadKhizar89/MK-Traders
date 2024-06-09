@@ -116,7 +116,7 @@ const OrderDetails = () => {
             <div className="mt-4 px-5 flex flex-col">
               <h5 className="text-xl md:text-2xl font-bold mt-2 tracking-tight text-slate-900">{order.productId.Name}</h5>
               <h5 className="text-xl mt-1 font-bold text-slate-900">Quantity: {order.quantity}</h5>
-              <h5 className="text-xl mt-1 font-bold text-slate-900">Total: ${order.price}</h5>
+              <h5 className="text-xl mt-1 font-bold text-slate-900">Total: Rs {order.price*order.quantity}</h5>
               {selectedOption !== "completed" && <h5 className="text-xl mt-1 font-bold text-slate-900">Order Date: {new Date(order.date).toLocaleDateString()}</h5>}
               {selectedOption === "pending" && <p className='text-sm text-black'>Waiting for approval by the owner</p>}
               {selectedOption === "approved" && <p className='text-sm mb-2 text-black'>Your Order will be delivered soon</p>}

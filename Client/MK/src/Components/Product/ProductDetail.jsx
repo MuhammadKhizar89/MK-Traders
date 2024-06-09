@@ -166,9 +166,9 @@ try{
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-md mx-auto">
             <h2 className="text-xl font-bold mb-4">Checkout</h2>
             <p className="mb-2">Product Name: <span className="font-semibold">{product?.Name}</span></p>
-            <p className="mb-2">Product Price: <span className="font-semibold">${product?.Price}</span></p>
+            <p className="mb-2">Product Price: <span className="font-semibold">Rs {product?.Price}</span></p>
             <p className="mb-2">Quantity: <span className="font-semibold">{quantity}</span></p>
-            <p className="mb-4">Total Bill: <span className="font-semibold">${product?.Price * quantity}</span></p>
+            <p className="mb-4">Total Bill: <span className="font-semibold">Rs {product?.Price * quantity}</span></p>
             <h3 className="text-lg font-bold mb-2">User Information</h3>
             <p className="mb-2">Username: <span className="font-semibold">{userinfo?.Username}</span></p>
             <p className="mb-2">Phone Number: <span className="font-semibold">{userinfo?.PhoneNumber}</span></p>
