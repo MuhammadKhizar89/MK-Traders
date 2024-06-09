@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useApi } from '../../Components/Context/ApiProvider';
 import '../../App.css';
-
+import img from './hehe.jpeg'
 const Products = () => {
   const { fetchProducts, products } = useApi();
   const [loading, setLoading] = useState(true);
@@ -71,7 +71,7 @@ const Products = () => {
         {products.map((product) => (
           <div key={product._id} className="relative m-5 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
             <Link to={`/product/${product._id}`} className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl">
-              <img className="object-cover" src={product.Image} alt={product.Name} />
+              <img className="object-cover" src={img} alt={product.Name} />
             </Link>
             <div className="mt-4 px-5 pb-5">
               <Link to={`/product/${product._id}`}>
