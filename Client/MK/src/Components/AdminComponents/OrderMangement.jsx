@@ -8,6 +8,8 @@ const OrderManagement = () => {
   const host = import.meta.env.VITE_SERVER_URL||"http://localhost:3000";
 
   useEffect(() => {
+    document.body.style.overflow = '';
+
     const fetchOrders = async () => {
       try {
         setLoading(true);

@@ -4,8 +4,33 @@ import { useCookies } from 'react-cookie';
 import { useApi } from '../../Components/Context/ApiProvider';
 import '../../App.css';
 import Alert from '../Layout/Alert'; // Import the Alert component
+import img1 from '../../assets/MKpics/phenyl.png';
+import img2 from '../../assets/MKpics/acid.jpg';
+import img3 from '../../assets/MKpics/hardbroom.jpg';
+import img4 from '../../assets/MKpics/softbroom.jpg';
+import img5 from '../../assets/MKpics/Towel.jpg';
+import img6 from '../../assets/MKpics/Surf Bonus.jpg';
+import img7 from '../../assets/MKpics/TrashBag.jpg';
+import img8 from '../../assets/MKpics/DustCarrier.jpg';
+import img9 from '../../assets/MKpics/washroobrush.jpg';
+import img10 from '../../assets/MKpics/LongDustCarrier.jpg';
+import img11 from '../../assets/MKpics/Wipers.jpg';
+import img12 from '../../assets/MKpics/airFreshners.jpg';
+import img13 from '../../assets/MKpics/Insect Killer(Cobra large)500ml.jpg';
+import img14 from '../../assets/MKpics/MosquitoKiller(Spray)500ml.jpg';
+import img15 from '../../assets/MKpics/handwashliquid.jpg';
+import img16 from '../../assets/MKpics/ScotchBrite.jpg';
+import img17 from '../../assets/MKpics/handtowels.jpg';
+import img18 from '../../assets/MKpics/GlassCleaner.jpg';
+import img19 from '../../assets/MKpics/dusters.jpg';
+import img20 from '../../assets/MKpics/Harpic.jpg';
+import img21 from '../../assets/MKpics/MosquitoKiller(Spray)500ml.jpg';
+
+
 
 const OrderDetails = () => {
+  const images = [img1, img2, img3,img4,img5,img6,img7,img8,img9,img10,img11,img12,img13,img14,img15,img16,img17,img18,img19,img20,img21];
+
   const [selectedOption, setSelectedOption] = useState("pending");
   const [feedback, setFeedback] = useState("");
   const [rating, setRating] = useState(5);
@@ -111,7 +136,7 @@ const OrderDetails = () => {
         {filteredOrders.map(order => (
           <div key={order._id} className='flex flex-col md:flex-row h-30 my-2 border-gray-100 bg-white rounded-lg'>
             <div className="rounded-lg m-2 border-2 flex justify-center shadow-lg">
-              <img className="md:h-52 w-64 m-3" src={order.productId.Image} alt="product image" />
+              <img className="md:h-52 w-64 m-3" src={images[order.productId.Image]} alt="product image" />
             </div>
             <div className="mt-4 px-5 flex flex-col">
               <h5 className="text-xl md:text-2xl font-bold mt-2 tracking-tight text-slate-900">{order.productId.Name}</h5>
