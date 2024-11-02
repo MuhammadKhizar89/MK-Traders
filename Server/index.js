@@ -6,12 +6,12 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors({
-    origin: 'https://mk-traders.vercel.app/',
+    // origin: 'https://mk-traders.vercel.app/',
 }));
 app.use(express.json());
 
 app.use(cookieParser({
-    httpOnly:true,
+    // httpOnly:true,
 }));
 
 connectDB().then(db => {

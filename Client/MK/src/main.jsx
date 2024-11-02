@@ -62,8 +62,6 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
         <ApiProvider>
-            {" "}
-            {/* Wrap the RouterProvider with ApiProvider */}
             <RouterProvider router={router} />
         </ApiProvider>
     </React.StrictMode>

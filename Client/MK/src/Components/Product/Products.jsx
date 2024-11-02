@@ -24,8 +24,6 @@ import img19 from '../../assets/MKpics/dusters.jpg';
 import img20 from '../../assets/MKpics/Harpic.jpg';
 import img21 from '../../assets/MKpics/MosquitoKiller(Spray)500ml.jpg';
 
-
-
 const Products = () => {
   const { fetchProducts, products } = useApi();
   const [loading, setLoading] = useState(true);
