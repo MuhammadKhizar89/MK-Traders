@@ -9,7 +9,11 @@ app.use(cors({
     origin: 'https://mk-traders.vercel.app/',
 }));
 app.use(express.json());
-app.use(cookieParser());
+
+app.use(cookieParser({
+    httpOnly:true,
+}));
+
 connectDB().then(db => {
     app.locals.db = db; 
     const userRoutes = require('./User/UserAll');
