@@ -9,8 +9,6 @@ const CartModel = require('../models/CartModel');
 const ReviewModel = require('../models/ReviewModel');
 const authMiddleware=require("../middleware/authenticate");
 
-
-
 router.post('/register', async (req, res) => {
   const { Username, PhoneNumber, Email, Address, Password } = req.body;
   if (!Username || !PhoneNumber || !Email || !Address || !Password) {
