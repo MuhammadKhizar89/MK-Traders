@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import Footer from '../Layout/Footer';
+import Footer from '../../Components/Layout/Footer';
 import ProductReviews from './ProductReviews';
 import UserFeedback from './UserFeedback';
 import { useApi } from '../../Components/Context/ApiProvider';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
-import Alert from '../Layout/Alert';
+import Alert from '../../Components/Layout/Alert';
 import '../../App.css';
 import img1 from '../../assets/MKpics/phenyl.png';
 import img2 from '../../assets/MKpics/acid.jpg';
