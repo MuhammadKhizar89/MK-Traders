@@ -2,25 +2,13 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const UserModel = require('../AllSchemas/UserModel');
-const OrderModel = require('../AllSchemas/OrderModel');
-const ProductModel = require('../AllSchemas/ProductModel');
-const CartModel = require('../AllSchemas/CartModel');
-const ReviewModel = require('../AllSchemas/ReviewModel');
+const UserModel = require('../models/UserModel');
+const OrderModel = require('../models/OrderModel');
+const ProductModel = require('../models/ProductModel');
+const CartModel = require('../models/CartModel');
+const ReviewModel = require('../models/ReviewModel');
+const authMiddleware=require("../middleware/authenticate");
 
-const authMiddleware = async (req, res, next) => {
-  const token = req.header('auth-token');
-  if (!token) {
-    return res.status(401).json({ message: 'Access denied. No token provided.' });
-  }
-  try {
-    const decoded = jwt.verify(token, 'mktraders_jazib');
-    req.user = decoded;
-    next();
-  } catch (error) {
-    res.status(400).json({ message: 'Invalid token.' });
-  }
-};
 
 
 router.post('/register', async (req, res) => {
