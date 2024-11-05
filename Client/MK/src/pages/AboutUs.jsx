@@ -1,5 +1,5 @@
 import React from 'react';
-import img3 from '../../assets/abc.jpg'; // Adjust the path accordingly
+import img3 from '../assets/abc.jpg'; // Adjust the path accordingly
 
 const AboutUs = () => {
   return (

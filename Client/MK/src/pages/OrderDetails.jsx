@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { useApi } from '../../Components/Context/ApiProvider';
-import '../../App.css';
-import Alert from '../Layout/Alert'; // Import the Alert component
-import img1 from '../../assets/MKpics/phenyl.png';
-import img2 from '../../assets/MKpics/acid.jpg';
-import img3 from '../../assets/MKpics/hardbroom.jpg';
-import img4 from '../../assets/MKpics/softbroom.jpg';
-import img5 from '../../assets/MKpics/Towel.jpg';
-import img6 from '../../assets/MKpics/Surf Bonus.jpg';
-import img7 from '../../assets/MKpics/TrashBag.jpg';
-import img8 from '../../assets/MKpics/DustCarrier.jpg';
-import img9 from '../../assets/MKpics/washroobrush.jpg';
-import img10 from '../../assets/MKpics/LongDustCarrier.jpg';
-import img11 from '../../assets/MKpics/Wipers.jpg';
-import img12 from '../../assets/MKpics/airFreshners.jpg';
-import img13 from '../../assets/MKpics/Insect Killer(Cobra large)500ml.jpg';
-import img14 from '../../assets/MKpics/MosquitoKiller(Spray)500ml.jpg';
-import img15 from '../../assets/MKpics/handwashliquid.jpg';
-import img16 from '../../assets/MKpics/ScotchBrite.jpg';
-import img17 from '../../assets/MKpics/handtowels.jpg';
-import img18 from '../../assets/MKpics/GlassCleaner.jpg';
-import img19 from '../../assets/MKpics/dusters.jpg';
-import img20 from '../../assets/MKpics/Harpic.jpg';
-import img21 from '../../assets/MKpics/MosquitoKiller(Spray)500ml.jpg';
+import { useApi } from '../Components/Context/ApiProvider';
+import '../App.css';
+import Alert from '../Components/Layout/Alert'; // Import the Alert component
+import img1 from '../assets/MKpics/phenyl.png';
+import img2 from '../assets/MKpics/acid.jpg';
+import img3 from '../assets/MKpics/hardbroom.jpg';
+import img4 from '../assets/MKpics/softbroom.jpg';
+import img5 from '../assets/MKpics/Towel.jpg';
+import img6 from '../assets/MKpics/Surf Bonus.jpg';
+import img7 from '../assets/MKpics/TrashBag.jpg';
+import img8 from '../assets/MKpics/DustCarrier.jpg';
+import img9 from '../assets/MKpics/washroobrush.jpg';
+import img10 from '../assets/MKpics/LongDustCarrier.jpg';
+import img11 from '../assets/MKpics/Wipers.jpg';
+import img12 from '../assets/MKpics/airFreshners.jpg';
+import img13 from '../assets/MKpics/Insect Killer(Cobra large)500ml.jpg';
+import img14 from '../assets/MKpics/MosquitoKiller(Spray)500ml.jpg';
+import img15 from '../assets/MKpics/handwashliquid.jpg';
+import img16 from '../assets/MKpics/ScotchBrite.jpg';
+import img17 from '../assets/MKpics/handtowels.jpg';
+import img18 from '../assets/MKpics/GlassCleaner.jpg';
+import img19 from '../assets/MKpics/dusters.jpg';
+import img20 from '../assets/MKpics/Harpic.jpg';
+import img21 from '../assets/MKpics/MosquitoKiller(Spray)500ml.jpg';
 
 
 
