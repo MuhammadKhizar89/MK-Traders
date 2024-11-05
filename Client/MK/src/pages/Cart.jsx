@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Alert from '../Components/Layout/Alert';
-import { useApi } from '../Components/Context/ApiProvider';
+import Alert from '../components_/Alert';
+import { useApi } from '../contextAPI/ApiProvider';
 import '../App.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import CheckoutModal from '../Components/Layout/CheckoutModal'; // Import the new component
+import CheckoutModal from '../components_/CheckoutModal'; // Import the new component
 import img1 from '../assets/MKpics/phenyl.png';
 import img2 from '../assets/MKpics/acid.jpg';
 import img3 from '../assets/MKpics/hardbroom.jpg';

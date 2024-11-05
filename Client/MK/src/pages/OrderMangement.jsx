@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useApi } from '../Context/ApiProvider';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../../App.css';
+import '../App.css';
 const OrderManagement = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);

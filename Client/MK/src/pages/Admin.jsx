@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { useApi } from '../../Components/Context/ApiProvider';
-import '../../App.css';
+import { useApi } from '../contextAPI/ApiProvider';
+import '../App.css';
 import { Link } from 'react-router-dom';
 const Admin = () => {
   const navigate = useNavigate();

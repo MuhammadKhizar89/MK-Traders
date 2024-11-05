@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { useApi } from '../../Components/Context/ApiProvider'; // Import the useApi hook
+import { useApi } from '../../contextAPI/ApiProvider'; // Import the useApi hook
 import '../../App.css';
 const UserFeedback = () => {
   const { fetchReviews} = useApi(); 

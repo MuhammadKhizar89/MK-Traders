@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
-import img1 from '../../assets/Land1.jpg';
-import img2 from '../../assets/Land2.jpg';
-import img3 from '../../assets/Land3.jpg';
+import { useState, useEffect, useRef } from 'react';
+import img1 from '../assets/Land1.jpg';
+import img2 from '../assets/Land2.jpg';
+import img3 from '../assets/Land3.jpg';
 import { useNavigate } from 'react-router-dom';
-import '../../App.css';
+import '../App.css';
 import { Link } from 'react-router-dom';
-import Login from '../../pages/Login';
+import Login from '../pages/Login';
 import { useCookies } from 'react-cookie';
-import { useApi } from '../../Components/Context/ApiProvider';
+import { useApi } from '../contextAPI/ApiProvider';
 const Home = () => {
   const navigate = useNavigate();
   const data = [img1, img2, img3];
@@ -22,7 +22,7 @@ const Home = () => {
   const dropdownRef = useRef(null);
   const toggleButtonRef = useRef(null);
   const { logout } = useApi();
-  const [cookies, setCookie, removeCookie] = useCookies(['token', 'email', 'username']);
+  const [cookies] = useCookies(['token', 'email', 'username']);
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);

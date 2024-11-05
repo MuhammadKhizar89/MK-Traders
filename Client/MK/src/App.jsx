@@ -1,7 +1,7 @@
-import Home from './Components/NavPaths/Home'
+import Home from './components_/Hero'
 import Products from './pages/Products'
-import Navbar from './Components/Layout/Navbar'
-import Footer from './Components/Layout/Footer'
+import Navbar from './components_/Navbar'
+import Footer from './components_/Footer'
 import { Outlet } from 'react-router-dom'
 function App() {
   return (

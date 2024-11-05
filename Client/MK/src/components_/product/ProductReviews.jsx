@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useApi } from '../../Components/Context/ApiProvider'; 
+import { useApi } from '../../contextAPI/ApiProvider'; 
 import '../../App.css';
 
 const ProductReviews = (props) => {

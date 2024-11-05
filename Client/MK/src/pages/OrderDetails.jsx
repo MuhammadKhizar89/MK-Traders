@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { useApi } from '../Components/Context/ApiProvider';
+import { useApi } from '../contextAPI/ApiProvider';
 import '../App.css';
-import Alert from '../Components/Layout/Alert'; // Import the Alert component
+import Alert from '../components_/Alert';
 import img1 from '../assets/MKpics/phenyl.png';
 import img2 from '../assets/MKpics/acid.jpg';
 import img3 from '../assets/MKpics/hardbroom.jpg';

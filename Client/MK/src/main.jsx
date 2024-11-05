@@ -10,9 +10,9 @@ import AboutUs from "./pages/AboutUs.jsx";
 import OrderDetails from "./pages/OrderDetails.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import Login from "./pages/Login.jsx";
-import ApiProvider from ".//Components/Context/ApiProvider.jsx"; // Import the ApiProvider
-import Admin from "./Components/AdminComponents/Admin.jsx";
-import OrderMangement from "./Components/AdminComponents/OrderMangement.jsx";
+import ApiProvider from "./contextAPI/ApiProvider.jsx"; // Import the ApiProvider
+import Admin from "./pages/Admin.jsx";
+import OrderMangement from "./pages/OrderMangement.jsx";
 const router = createBrowserRouter([
     {
         path: "/",

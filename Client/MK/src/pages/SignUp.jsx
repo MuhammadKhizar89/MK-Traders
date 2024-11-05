@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useApi } from '../Components/Context/ApiProvider';
+import { useApi } from '../contextAPI/ApiProvider';
 import { useCookies } from 'react-cookie';
 
 const SignUp = () => {
   const { signup } = useApi(); // Use the signup function from the ApiProvider
-  const [cookies, setCookie] = useCookies(['token', 'email']);
+  const [setCookie] = useCookies(['token', 'email']);
   const [username, setUsername] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
