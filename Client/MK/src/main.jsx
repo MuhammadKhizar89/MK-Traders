@@ -5,11 +5,11 @@ import "./index.css";
 import {RouterProvider, createBrowserRouter} from "react-router-dom";
 import ProductDetail from "./Components/Product/ProductDetail.jsx";
 import Cart from "./Components/NavPaths/Cart.jsx";
-import Products from "./Components/Product/Products.jsx";
+import Products from "./pages/Products.jsx";
 import AboutUs from "./Components/NavPaths/AboutUs.jsx";
 import OrderDetails from "./Components/NavPaths/OrderDetails.jsx";
-import SignUp from "./Components/Accountomponents/SignUp.jsx";
-import Login from "./Components/Accountomponents/Login.jsx";
+import SignUp from "./components_/account/SignUp.jsx";
+import Login from "./components_/account/Login.jsx";
 import ApiProvider from ".//Components/Context/ApiProvider.jsx"; // Import the ApiProvider
 import Admin from "./Components/AdminComponents/Admin.jsx";
 import OrderMangement from "./Components/AdminComponents/OrderMangement.jsx";

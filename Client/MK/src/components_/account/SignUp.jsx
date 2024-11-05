@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useApi } from '../Context/ApiProvider';
+import { useApi } from '../../Components/Context/ApiProvider';
 import { useCookies } from 'react-cookie';
 
 const SignUp = () => {

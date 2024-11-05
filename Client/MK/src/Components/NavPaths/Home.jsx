@@ -5,7 +5,7 @@ import img3 from '../../assets/Land3.jpg';
 import { useNavigate } from 'react-router-dom';
 import '../../App.css';
 import { Link } from 'react-router-dom';
-import Login from '../Accountomponents/Login';
+import Login from '../../components_/account/Login';
 import { useCookies } from 'react-cookie';
 import { useApi } from '../../Components/Context/ApiProvider';
 const Home = () => {

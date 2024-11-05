@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import { useApi } from '../Context/ApiProvider';
+import { useApi } from '../../Components/Context/ApiProvider';
 import "../../App.css";
 const Login = ({ setLoginState }) => {
   const navigate = useNavigate();
@@ -11,7 +11,6 @@ const Login = ({ setLoginState }) => {
   const [Password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
-
   const handleLogin = async (event) => {
     event.preventDefault();
     // Basic form validation
